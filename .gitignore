@@ -1,0 +1,21 @@
+# dependencies
+node_modules/
+
+# environment variables and credentials
+.env
+service-account*.json
+*.pem
+
+# uploaded contract PDFs (keep the empty folder)
+PDFs/*
+!PDFs/.gitkeep
+
+# logs
+*.log
+npm-debug.log*
+
+# editor / OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

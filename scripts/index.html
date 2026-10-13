@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PMS</title>
+    <link rel="icon" href="/images/PhotograpyJobPlanner-logo.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Moderustic:wght@300..800&display=swap" >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/CSS/app_style.css">
+    <script src="/scripts/app_scripts.js" defer > </script>
+    <script src="/scripts/classie.js"></script>
+    <script src="/scripts/mycharts.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+
+</head>
+<body class="grid">
+    <header class="header">
+        <div class="logo-container">
+            <img class="logo" src="/management/images/PhotograpyJobPlanner-logo.png" alt="Logo">
+            <div id="PageTag">ΑΡΧΙΚΗ</div>
+            <div class="settings">
+                <img src="images/gear.svg">
+            </div>
+        </div>
+        
+    </header>
+    <main class="main">
+        <div class="date_filter">
+            <h4>Φίλτρο:</h4>
+            <input type="number" id="yearFilter" name="yearFilter" min="2004" max="2060" style="margin:0">
+            <div class="selection-container" id="monthFilter">
+                     <div class="custom-select" >
+                         <select name="monthFilter" style="margin:0">
+                         <option value="1" selected="selected" >Ιανουάριος</option>
+                         <option value="2">Φεβρουάριος</option>
+                         <option value="3">Μάρτιος</option>
+                         <option value="4">Απρίλιος</option>
+                         <option value="5">Μάιος</option>
+                         <option value="6">Ιούνιος</option>
+                         <option value="7">Ιούλιος</option>
+                         <option value="8">Άυγουστος</option>
+                         <option value="9">Σεπτέμβριος</option>
+                         <option value="10">Οκτώβριος</option>
+                         <option value="11">Νοέμβριος</option>
+                         <option value="12">Δεκέμβριος</option>
+                         <option value="0">Όλα</option>
+                         </select>
+                     </div>
+            </div>  
+        </div>
+        <div class="job-container">
+            
+        </div>
+    </main>
+
+    <nav class="nav">
+        <div id="bt-menu" class="bt-menu bt-menu-close">
+            <a href="#" class="bt-menu-trigger"><span>Menu</span></a>
+            <ul>
+                <li><a id="home" href="">ΑΡΧΙΚΗ</a></li>
+                <li><a id="offers" href="#prosfores">ΠΡΟΣΦΟΡΕΣ</a></li>
+                <li><a id="jobs" href="#ergasies">ΕΡΓΑΣΙΕΣ</a></li>
+                <li><a id="archive" href="#arxeio">ΑΡΧΕΙΟ </a></li>
+                <li><a id="dashboard" href="#oikonimika">ΟΙΚΟΝΟΜΙΚΑ</a></li>
+                <li><a id="availability" href="#diathesimotita">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div id="myModal" class="modal"></div>
+    <div id="OfferPackageModal" class="modal"></div>
+    <div id="OfferPDFSettingsModal"></div>
+
+    <div class="float">
+        <img src="images/plus icon.svg" class="My-Float">
+    </div>
+    <div class="FloatCalendar">
+        <img src="images/calendar ICON.png" class="MyCalendar">
+    </div>
+    
+</body>
+</html>
