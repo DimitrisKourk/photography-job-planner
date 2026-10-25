@@ -357,6 +357,7 @@ function showArchivedJobDetails(current_job){
      <div class="tab-bar" role="tablist">
        <button type="button" class="tab-btn" role="tab" data-tab="info">ΠΛΗΡΟΦΟΡΙΕΣ</button>
        <button type="button" class="tab-btn" role="tab" data-tab="crew">ΣΥΝΕΡΓΑΤΕΣ</button>
+       <button type="button" class="tab-btn" role="tab" data-tab="payments">ΠΛΗΡΩΜΕΣ</button>
      </div>
      <div class="tab-panel" role="tabpanel" data-tab="info">
         <form class="offer_form">
@@ -510,9 +511,9 @@ function showArchivedJobDetails(current_job){
           </li>
      </ul>  
     </div>
+     <div class="tab-panel payments-panel" role="tabpanel" data-tab="payments"></div>
      
      <input id="show_pdf" type="button" value="ΠΡΟΒΟΛΗ PDF"></input>
-     <input id="show_payments" type="button" value="Προβολή Πληρωμών">
 
     </div>
   
@@ -528,6 +529,7 @@ function showArchivedJobDetails(current_job){
 
   initTabs(modal);
   initDatePickers(modal);
+  getPayments(current_job.id,"archive",current_job.price);
   modal.style.display = "block";
   var span = document.getElementsByClassName("close")[0];
   span.onclick = function () {
@@ -538,10 +540,6 @@ function showArchivedJobDetails(current_job){
   document.querySelector("#show_package").addEventListener("click", function () {
     let package_data=document.querySelector(".offer_form [name='package']").value;
     show_offer_package(package_data);
-  });
-
-  document.querySelector("#show_payments").addEventListener("click", function () {
-    getPayments(current_job.id,"archive",current_job.price);
   });
 
   document.querySelector("#show_pdf").addEventListener("click", function () {

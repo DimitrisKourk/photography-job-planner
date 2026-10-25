@@ -1,5 +1,15 @@
 // customer payments: form, list, owed amount
 
+// payment dates come from the db as UTC ("...Z"); show them in greek time, 24h
+function formatPaymentDate(date) {
+  return new Date(date).toLocaleString("el-GR", {
+    timeZone: "Europe/Athens",
+    hour12: false,
+    day: "2-digit", month: "2-digit", year: "numeric",
+    hour: "2-digit", minute: "2-digit",
+  });
+}
+
 function getPaymentFormData() {
   let payment = {
     amount: document.querySelector("#payment_form [name='payment_amount']").value,
@@ -18,7 +28,7 @@ function getPayments(id,condition,offer_price){
         show_payments(json,id,offer_price);}
       return json;
       }) 
-    .then((json)=>{if(condition!="archive"){calculate_owed(offer_price,json);}})
+    .then((json)=>{if(condition!="archive" && document.querySelector("#payments_owed_amount")){calculate_owed(offer_price,json);}})
     .catch((err) => console.error("error:", err));
 }
 
@@ -61,14 +71,12 @@ function deletePayment(payment_id,job_id) {
     .catch((err) => console.error("error:", err));
 }
 
+// renders into the ΠΛΗΡΩΜΕΣ tab of the job details modal
 function show_payments(Payments,job_id,offer_price){
-  let payments_window=document.querySelector("#OfferPackageModal");
-  
-  
-  var anHTML=`<div class="modal-content">
-  <span class="close close2">&times;</span>
-  <h3>ΠΛΗΡΩΜΕΣ</h3>
-  <h4>Τιμή: ${offer_price}</h4>
+  let payments_panel=document.querySelector(".modal .payments-panel");
+  if (!payments_panel) return;
+
+  var anHTML=`<h4>Τιμή: ${offer_price}</h4>
   <h4 id="payments_owed_amount"></h4>
   <form id="payment_form">
     <label for="payment_id">Κωδικός</label>
@@ -83,23 +91,14 @@ function show_payments(Payments,job_id,offer_price){
   `;
 
   for (let payment of Payments) {
-    var payment_date=payment.date.split('.')[0].split('T');
-    var date=payment_date[0].split('-');
-    var formated_date= date[2]+'-'+date[1]+'-'+date[0];
     anHTML += `<tr>
           <td>${payment.id}</td>
           <td>${payment.amount}</td>
-          <td>${payment_date[1]} ${formated_date}</td>
+          <td>${formatPaymentDate(payment.date)}</td>
           </tr>`;
   }
-  anHTML += "</table></div>";
-  payments_window.innerHTML=anHTML;
-  payments_window.style.display = "block";
-  var span = document.getElementsByClassName("close2")[0];
-  span.onclick = function () {
-    payments_window.innerHTML = "";
-    payments_window.style.display = "none";
-  };
+  anHTML += "</table>";
+  payments_panel.innerHTML=anHTML;
 
   document.querySelector("#new_payment").addEventListener("click", a =>
     addPayment(job_id)
@@ -115,14 +114,12 @@ function show_payments(Payments,job_id,offer_price){
 
 }
 
+// renders into the ΠΛΗΡΩΜΕΣ tab of the archived job details modal
 function show_payments_archived(Payments,offer_price){
-  let payments_window=document.querySelector("#OfferPackageModal");
-  
-  
-  var anHTML=`<div class="modal-content">
-  <span class="close close2">&times;</span>
-  <h3>ΠΛΗΡΩΜΕΣ</h3>
-  <h4>Τιμή: ${offer_price}</h4>
+  let payments_panel=document.querySelector(".modal .payments-panel");
+  if (!payments_panel) return;
+
+  var anHTML=`<h4>Τιμή: ${offer_price}</h4>
    <table id="payments_Table"><tr><th>Κωδικός</th><th>Ποσό</th><th>Ημ/νία Συναλλαγής</th></tr> 
   `;
 
@@ -130,17 +127,11 @@ function show_payments_archived(Payments,offer_price){
     anHTML += `<tr>
           <td>${payment.id}</td>
           <td>${payment.amount}</td>
-          <td>${payment.date}</td>
+          <td>${formatPaymentDate(payment.date)}</td>
           </tr>`;
   }
-  anHTML += "</table></div>";
-  payments_window.innerHTML=anHTML;
-  payments_window.style.display = "block";
-  var span = document.getElementsByClassName("close2")[0];
-  span.onclick = function () {
-    payments_window.innerHTML = "";
-    payments_window.style.display = "none";
-  };
+  anHTML += "</table>";
+  payments_panel.innerHTML=anHTML;
 }
 
 function selectPayment(event) {

@@ -141,6 +141,7 @@ function showJobDetails(current_job){
        <button type="button" class="tab-btn" role="tab" data-tab="info">ΠΛΗΡΟΦΟΡΙΕΣ</button>
        <button type="button" class="tab-btn" role="tab" data-tab="tasks">ΕΡΓΑΣΙΕΣ <span class="tab-count"></span></button>
        <button type="button" class="tab-btn" role="tab" data-tab="crew">ΣΥΝΕΡΓΑΤΕΣ</button>
+       <button type="button" class="tab-btn" role="tab" data-tab="payments">ΠΛΗΡΩΜΕΣ</button>
      </div>
      <div class="tab-panel" role="tabpanel" data-tab="info">
         <form class="offer_form">
@@ -316,12 +317,12 @@ function showJobDetails(current_job){
           </li>
      </ul>  
     </div>
+     <div class="tab-panel payments-panel" role="tabpanel" data-tab="payments"></div>
      
      <div class="modal-actions">
        <input id="show_pdf" type="button" value="ΠΡΟΒΟΛΗ PDF">
        <input id="update_job" type="button" value="Αποθήκευση">
        <input id="add_to_Calendar" type="button" value="Προσθήκη στο Ημερολόγιο" style="background-color:#213A5C">
-       <input id="show_payments" type="button" value="Προβολή Πληρωμών">
        <input id="archive_job" class="danger-btn" type="button" value="Αρχειοθέτηση">
      </div>
 
@@ -333,6 +334,7 @@ function showJobDetails(current_job){
   update_task_count();
   initTabs(modal);
   initDatePickers(modal);
+  getPayments(current_job.id,"",current_job.price);
   modal.style.display = "block";
 
   document.querySelector("#update_job").addEventListener("click", function () {
@@ -347,9 +349,6 @@ function showJobDetails(current_job){
   });
   document.querySelector("#add_to_Calendar").addEventListener("click", function () {
     addCalendarEvent();
-  });
-  document.querySelector("#show_payments").addEventListener("click", function () {
-    getPayments(current_job.id,"",current_job.price);
   });
   
   
