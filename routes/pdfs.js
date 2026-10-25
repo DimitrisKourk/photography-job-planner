@@ -34,6 +34,16 @@ router.get("/download-pdf/:pdf", (req, res) => {
     return res.status(404).json("Error CAN NOT FIND the requested PDF");
   }
 
+  // ?inline=1 shows the file in the browser (the preview iframe / new tab) instead of downloading it
+  if (req.query.inline) {
+    return res.sendFile(filePath, (err) => {
+      if (err) {
+        console.log(`Error Downloading the PDF`);
+        if (!res.headersSent) res.status(404).json("Error Downloading the PDF");
+      }
+    });
+  }
+
   // download under the original name, without the timestamp prefix added on upload
   res.download(filePath, filename.replace(/^\d{13}-/, ""), (err) => {
     if (err) {

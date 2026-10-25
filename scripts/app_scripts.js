@@ -3752,6 +3752,11 @@ function show_pdf(type,id,pdf){
   
   }
   else{
+    var pdf_url='/api/download-pdf/'+encodeURIComponent(pdf);
+    // preview on desktop; touch devices get a new tab button instead (CSS shows one or the other)
+    var preview_html=`
+      <input id="open_pdf_tab" class="pdf_open_tab" type="button" value="ΑΝΟΙΓΜΑ ΣΕ ΝΕΑ ΚΑΡΤΕΛΑ">
+      <iframe class="pdf_preview" src="${pdf_url}?inline=1" title="${pdf_display_name}"></iframe>`;
 
     if(type==="archived_offer" || type==="archived_job"){
       var anHTML=`<div class="modal-content">
@@ -3759,7 +3764,8 @@ function show_pdf(type,id,pdf){
       <h2> ΒΡΕΘΗΚΕ ΣΥΣΧΕΤΙΣΜΕΝΟ PDF</h2>
       <h3>${pdf_display_name}</h3>
       <input id="download_pdf" type="button" value="ΚΑΤΕΒΑΣΜΑ PDF">
-      <a id="pdf_link" href="${'/api/download-pdf/'+pdf}"></a>
+      <a id="pdf_link" href="${pdf_url}"></a>
+      ${preview_html}
       </div>
       `;
 
@@ -3778,7 +3784,8 @@ function show_pdf(type,id,pdf){
       <input type="file" id="select_pdf" name="pdf" accept="image/*,.pdf" single>
       <input id="upload_pdf" type="button" value="ΑΝΤΙΚΑΤΑΣΤΑΣΗ">
       <input id="download_pdf" type="button" value="ΚΑΤΕΒΑΣΜΑ PDF">
-      <a id="pdf_link" href="${'/api/download-pdf/'+pdf}"></a>
+      <a id="pdf_link" href="${pdf_url}"></a>
+      ${preview_html}
       </div>
       `;
 
@@ -3793,6 +3800,10 @@ function show_pdf(type,id,pdf){
         link.click();
       });
     }
+
+    document.querySelector("#open_pdf_tab").addEventListener("click", function (){
+      window.open(pdf_url+"?inline=1", "_blank");
+    });
   }
 
 

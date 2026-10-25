@@ -1225,6 +1225,26 @@ th {
   width: 60%;
 }
 
+/* contract PDF preview in show_pdf; touch devices can't show PDFs in an iframe, so they get a new tab button */
+#OfferPackageModal .pdf_preview{
+  display: block;
+  width: 100%;
+  height: 70vh;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+}
+#OfferPackageModal .pdf_open_tab{
+  display: none;
+}
+@media (pointer: coarse) {
+  #OfferPackageModal .pdf_preview{
+    display: none;
+  }
+  #OfferPackageModal .pdf_open_tab{
+    display: inline-block;
+  }
+}
+
 .offer_pdf{
   
   width: 100%;
