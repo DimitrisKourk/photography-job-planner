@@ -358,6 +358,7 @@ function showArchivedJobDetails(current_job){
        <button type="button" class="tab-btn" role="tab" data-tab="info">ΠΛΗΡΟΦΟΡΙΕΣ</button>
        <button type="button" class="tab-btn" role="tab" data-tab="crew">ΣΥΝΕΡΓΑΤΕΣ</button>
        <button type="button" class="tab-btn" role="tab" data-tab="payments">ΠΛΗΡΩΜΕΣ</button>
+       <button type="button" class="tab-btn" role="tab" data-tab="pdf">PDF</button>
      </div>
      <div class="tab-panel" role="tabpanel" data-tab="info">
         <form class="offer_form">
@@ -512,8 +513,7 @@ function showArchivedJobDetails(current_job){
      </ul>  
     </div>
      <div class="tab-panel payments-panel" role="tabpanel" data-tab="payments"></div>
-     
-     <input id="show_pdf" type="button" value="ΠΡΟΒΟΛΗ PDF"></input>
+     <div class="tab-panel pdf-panel" role="tabpanel" data-tab="pdf"></div>
 
     </div>
   
@@ -542,9 +542,9 @@ function showArchivedJobDetails(current_job){
     show_offer_package(package_data);
   });
 
-  document.querySelector("#show_pdf").addEventListener("click", function () {
-    
-    show_pdf("archived_job",current_job.id,current_job.pdf);
-  });
+  // pdf tab is filled on first open so the preview isn't downloaded for every job
+  modal.querySelector(".tab-btn[data-tab='pdf']").addEventListener("click", function () {
+    show_pdf("archived_job",current_job.id,current_job.pdf,modal.querySelector(".pdf-panel"));
+  }, { once: true });
 }
 

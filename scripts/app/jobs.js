@@ -142,6 +142,7 @@ function showJobDetails(current_job){
        <button type="button" class="tab-btn" role="tab" data-tab="tasks">ΕΡΓΑΣΙΕΣ <span class="tab-count"></span></button>
        <button type="button" class="tab-btn" role="tab" data-tab="crew">ΣΥΝΕΡΓΑΤΕΣ</button>
        <button type="button" class="tab-btn" role="tab" data-tab="payments">ΠΛΗΡΩΜΕΣ</button>
+       <button type="button" class="tab-btn" role="tab" data-tab="pdf">PDF</button>
      </div>
      <div class="tab-panel" role="tabpanel" data-tab="info">
         <form class="offer_form">
@@ -318,11 +319,11 @@ function showJobDetails(current_job){
      </ul>  
     </div>
      <div class="tab-panel payments-panel" role="tabpanel" data-tab="payments"></div>
+     <div class="tab-panel pdf-panel" role="tabpanel" data-tab="pdf"></div>
      
      <div class="modal-actions">
-       <input id="show_pdf" type="button" value="ΠΡΟΒΟΛΗ PDF">
        <input id="update_job" type="button" value="Αποθήκευση">
-       <input id="add_to_Calendar" type="button" value="Προσθήκη στο Ημερολόγιο" style="background-color:#213A5C">
+       <input id="add_to_Calendar" class="push-right" type="button" value="Προσθήκη στο Ημερολόγιο" style="background-color:#213A5C">
        <input id="archive_job" class="danger-btn" type="button" value="Αρχειοθέτηση">
      </div>
 
@@ -350,12 +351,10 @@ function showJobDetails(current_job){
   document.querySelector("#add_to_Calendar").addEventListener("click", function () {
     addCalendarEvent();
   });
-  
-  
-  document.querySelector("#show_pdf").addEventListener("click", function () {
-    
-    show_pdf("job",current_job.id,current_job.pdf);
-  });
+  // pdf tab is filled on first open so the preview isn't downloaded for every job
+  modal.querySelector(".tab-btn[data-tab='pdf']").addEventListener("click", function () {
+    show_pdf("job",current_job.id,current_job.pdf,modal.querySelector(".pdf-panel"));
+  }, { once: true });
 }
 
 function fill_form(current_job) {

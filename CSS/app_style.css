@@ -861,7 +861,8 @@ input[type=button]:hover {
   border: 2px solid #2f2f2f;
 }
 
-/* button row at the bottom of the job/offer modals; .danger-btn (archive) sits on the far right */
+/* button row at the bottom of the job/offer modals; .danger-btn (archive) sits on the far right,
+   a .push-right button before it moves to the right together with it */
 .modal-actions {
   display: flex;
   flex-wrap: wrap;
@@ -872,6 +873,14 @@ input[type=button]:hover {
 input[type=button].danger-btn {
   margin-left: auto;
   background-color: #c0392b;
+}
+
+.modal-actions .push-right {
+  margin-left: auto;
+}
+
+.modal-actions .push-right ~ input[type=button].danger-btn {
+  margin-left: 0;
 }
 
 input[type=button].danger-btn:hover {
@@ -1296,22 +1305,22 @@ th {
   width: 60%;
 }
 
-/* contract PDF preview in show_pdf; touch devices can't show PDFs in an iframe, so they get a new tab button */
-#OfferPackageModal .pdf_preview{
+/* contract PDF preview in show_pdf (popup or job PDF tab); touch devices can't show PDFs in an iframe, so they get a new tab button */
+.pdf_preview{
   display: block;
   width: 100%;
   height: 70vh;
   border: 1px solid #ccc;
   margin-top: 10px;
 }
-#OfferPackageModal .pdf_open_tab{
+.pdf_open_tab{
   display: none;
 }
 @media (pointer: coarse) {
-  #OfferPackageModal .pdf_preview{
+  .pdf_preview{
     display: none;
   }
-  #OfferPackageModal .pdf_open_tab{
+  .pdf_open_tab{
     display: inline-block;
   }
 }
