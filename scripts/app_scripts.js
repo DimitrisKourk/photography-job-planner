@@ -3719,6 +3719,8 @@ function getAvailability(){
 
 function show_pdf(type,id,pdf){
   pdf_window=document.querySelector("#OfferPackageModal");
+  // hide the timestamp prefix added on upload (older files have none)
+  var pdf_display_name=pdf ? pdf.replace(/^\d{13}-/, "") : pdf;
   
 
   
@@ -3755,7 +3757,7 @@ function show_pdf(type,id,pdf){
       var anHTML=`<div class="modal-content">
       <span class="close close2">&times;</span>
       <h2> ΒΡΕΘΗΚΕ ΣΥΣΧΕΤΙΣΜΕΝΟ PDF</h2>
-      <h3>${pdf}</h3>
+      <h3>${pdf_display_name}</h3>
       <input id="download_pdf" type="button" value="ΚΑΤΕΒΑΣΜΑ PDF">
       <a id="pdf_link" href="${'/api/download-pdf/'+pdf}"></a>
       </div>
@@ -3772,7 +3774,7 @@ function show_pdf(type,id,pdf){
       var anHTML=`<div class="modal-content">
       <span class="close close2">&times;</span>
       <h2> ΒΡΕΘΗΚΕ ΣΥΣΧΕΤΙΣΜΕΝΟ PDF</h2>
-      <h3>${pdf}</h3>
+      <h3>${pdf_display_name}</h3>
       <input type="file" id="select_pdf" name="pdf" accept="image/*,.pdf" single>
       <input id="upload_pdf" type="button" value="ΑΝΤΙΚΑΤΑΣΤΑΣΗ">
       <input id="download_pdf" type="button" value="ΚΑΤΕΒΑΣΜΑ PDF">
@@ -3815,8 +3817,11 @@ function upload_pdf(type,id) {
     method: 'POST',
     body: formData
   })
-    .then((res) => console.log(res))
-    .then(()=> associate_pdf(type,id,file_name))
+    .then((res) => {
+      if (!res.ok) throw new Error(res.status);
+      return res.json();
+    })
+    .then((saved_name)=> associate_pdf(type,id,saved_name)) // server adds a timestamp prefix to the name
     .catch((err) => alert("Error occured", err));
 
 }

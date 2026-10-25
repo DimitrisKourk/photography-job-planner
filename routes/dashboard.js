@@ -105,7 +105,7 @@ router.get("/dashboard/IncomePerCategory/:data", handle(async (req, res) => {
                 ( select sum(Jobs.price) as incomeTotal
                   from Jobs
                   where Jobs.job_type=? and year(Jobs.date)=?
-                  union
+                  union all
                   select sum(JobArchive.price) as incomeTotal
                   from JobArchive
                   where JobArchive.job_type=? and year(JobArchive.date)=?

@@ -17,32 +17,35 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, callback) {
     const utf8Filename = Buffer.from(file.originalname, "latin1").toString("utf-8"); // accepting greek characters
-    callback(null, utf8Filename);
+    // timestamp prefix so an upload never overwrites another job's file with the same name
+    callback(null, Date.now() + "-" + utf8Filename);
   },
 });
 const upload = multer({ storage });
 
 router.get("/download-pdf/:pdf", (req, res) => {
-  const filename = req.params.pdf;
+  // basename strips any directory part, so "..%2F.env" can't reach files outside /PDFs
+  const filename = path.basename(req.params.pdf);
   const filePath = path.join(pdfDirectory, filename);
   console.log(filePath);
 
   if (!fs.existsSync(filePath)) {
     console.log(`Error CAN NOT FIND the requested PDF`);
-    res.status(404).json("Error CAN NOT FIND the requested PDF");
+    return res.status(404).json("Error CAN NOT FIND the requested PDF");
   }
 
-  res.download(filePath, filename, (err) => {
+  // download under the original name, without the timestamp prefix added on upload
+  res.download(filePath, filename.replace(/^\d{13}-/, ""), (err) => {
     if (err) {
-      res.status(404).json("Error Downloading the PDF");
       console.log(`Error Downloading the PDF`);
+      if (!res.headersSent) res.status(404).json("Error Downloading the PDF");
     }
   });
 });
 
 router.post("/upload-pdf", upload.single("file"), (req, res) => {
   console.log(req.file);
-  res.status(200).json("Successfully uploaded file");
+  res.status(200).json(req.file.filename); // the saved name, which the front end links to the offer/job
 });
 
 // links an uploaded PDF to an offer or a job
