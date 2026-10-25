@@ -65,7 +65,7 @@ Each route file is a small Express router. Route handlers are wrapped in `utils/
 | `routes/dashboard.js` | Financial dashboard and per-associate analytics queries |
 | `routes/calendar.js` | Google Calendar integration (optional) |
 | `routes/pdfs.js` | Contract PDF upload, download and linking to offers/jobs |
-| `scripts/index.html`, `app_scripts.js` | Management system single-page front end |
+| `scripts/index.html`, `scripts/app/*.js` | Management system single-page front end (one script per section) |
 | `scripts/mycharts.js` | Chart.js dashboard charts |
 | `scripts/login.html` | Login page |
 | `CSS/` | Stylesheets for the app and the login page |
