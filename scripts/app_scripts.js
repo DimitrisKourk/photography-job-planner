@@ -627,8 +627,8 @@ function showJobDetails(current_job){
 
           <label for="bride_place" style="display:block;">Προετοιμασία Νύφης</label>
           <span style="display:block;">
-          <input type="text" id="groom_place" name="bride_place" value="${current_job.bride_place}" style="width:min-content">
-          <input type="time" id="groom_time" name="bride_time" value="${current_job.bride_time}" style="width:min-content">
+          <input type="text" id="bride_place" name="bride_place" value="${current_job.bride_place}" style="width:min-content">
+          <input type="time" id="bride_time" name="bride_time" value="${current_job.bride_time}" style="width:min-content">
           </span>
 
           <label for="package">Πακέτο Προσφοράς</label>
@@ -775,6 +775,7 @@ function showJobDetails(current_job){
   </div>`;
   fill_form(current_job);
   make_checklist_events();
+  initDatePickers(modal);
   modal.style.display = "block";
 
   document.querySelector("#update_job").addEventListener("click", function () {
@@ -1128,6 +1129,7 @@ function showOfferDetails(current_offer){
    </div>`;
 
    
+  initDatePickers(modal);
   modal.style.display = "block";
   var span = document.getElementsByClassName("close")[0];
   span.onclick = function () {
@@ -1214,6 +1216,7 @@ function create_offer() {
          </form>
        </div>`;
 
+  initDatePickers(modal);
   modal.style.display = "block";
   var span = document.getElementsByClassName("close")[0];
   span.onclick = function () {
@@ -1562,6 +1565,38 @@ function uniq(a) {
   return Array.from(new Set(a));
 }
 
+// replaces native date/time inputs with flatpickr so times are always shown in 24h format
+// the underlying values keep the native format ("YYYY-MM-DDTHH:MM" / "HH:MM") so the form readers don't change
+function initDatePickers(container) {
+  container.querySelectorAll("input[type=datetime-local]").forEach(function (input) {
+    var value = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(input.value) ? input.value.slice(0, 16) : "";
+    input.type = "text";
+    flatpickr(input, {
+      enableTime: true,
+      time_24hr: true,
+      dateFormat: "Y-m-dTH:i",
+      altInput: true,
+      altFormat: "j-n-Y H:i",
+      locale: "gr",
+      disableMobile: true,
+      defaultDate: value || null
+    });
+  });
+  container.querySelectorAll("input[type=time]").forEach(function (input) {
+    var value = /^\d{2}:\d{2}/.test(input.value) ? input.value.slice(0, 5) : "";
+    input.type = "text";
+    flatpickr(input, {
+      enableTime: true,
+      noCalendar: true,
+      time_24hr: true,
+      dateFormat: "H:i",
+      locale: "gr",
+      disableMobile: true,
+      defaultDate: value || null
+    });
+  });
+}
+
 function getJobFormData() {
   var tasksStatus=check_To_Do_list();
   let Job = { 
@@ -1848,6 +1883,7 @@ function showArchivedOfferDetails(current_offer){
        </form>
    </div>`;
 
+  initDatePickers(modal);
   modal.style.display = "block";
   var span = document.getElementsByClassName("close")[0];
   span.onclick = function () {
@@ -2041,8 +2077,8 @@ function showArchivedJobDetails(current_job){
 
           <label for="bride_place" style="display:block;">Προετοιμασία Νύφης</label>
           <span style="display:block;">
-          <input type="text" id="groom_place" name="bride_place" value="${current_job.bride_place}" style="width:min-content">
-          <input type="time" id="groom_time" name="bride_time" value="${current_job.bride_time}" style="width:min-content">
+          <input type="text" id="bride_place" name="bride_place" value="${current_job.bride_place}" style="width:min-content">
+          <input type="time" id="bride_time" name="bride_time" value="${current_job.bride_time}" style="width:min-content">
           </span>
 
           <label for="package">Πακέτο Προσφοράς</label>
@@ -2170,6 +2206,7 @@ function showArchivedJobDetails(current_job){
   if(current_job.video_editor){document.querySelector(" ul li [name='ΜΟΝΤΑΖ']").value=current_job.video_editor;  };
   if(current_job.drone){document.querySelector(" ul li [name='Drone']").value=current_job.drone;};
 
+  initDatePickers(modal);
   modal.style.display = "block";
   var span = document.getElementsByClassName("close")[0];
   span.onclick = function () {
