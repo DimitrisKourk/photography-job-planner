@@ -137,8 +137,12 @@ function showJobDetails(current_job){
      <span class="close">&times;</span>
      <h3>Λεπτομέριες Εργασίας</h3>
 
-     <button class="collapsible">ΠΛΗΡΟΦΟΡΙΕΣ</button>
-     <div class="content">
+     <div class="tab-bar" role="tablist">
+       <button type="button" class="tab-btn" role="tab" data-tab="info">ΠΛΗΡΟΦΟΡΙΕΣ</button>
+       <button type="button" class="tab-btn" role="tab" data-tab="tasks">ΕΡΓΑΣΙΕΣ <span class="tab-count"></span></button>
+       <button type="button" class="tab-btn" role="tab" data-tab="crew">ΣΥΝΕΡΓΑΤΕΣ</button>
+     </div>
+     <div class="tab-panel" role="tabpanel" data-tab="info">
         <form class="offer_form">
        
           <label for="type">Τύπος</label>
@@ -195,8 +199,7 @@ function showJobDetails(current_job){
           
         </form>
      </div>
-     <button class="collapsible">ΕΡΓΑΣΙΕΣ</button>
-     <div class="content">
+     <div class="tab-panel" role="tabpanel" data-tab="tasks">
          <ul class="to-do-list" id="myUL">
              <li id="task1">ΠΑΡΑΔΟΣΗ ΦΩΤΟΓΡΑΦΙΩΝ</li>
              <li id="task2">ΠΑΡΑΔΟΣΗ ΒΙΝΤΕΟ</li>
@@ -218,8 +221,7 @@ function showJobDetails(current_job){
              <li id="task11">ΠΑΡΑΔΟΣΗ ΣΤΟΝ ΠΕΛΑΤΗ</li>
          </ul>
      </div>
-     <button class="collapsible">ΣΥΝΕΡΓΑΤΕΣ</button>
-     <div class="content">
+     <div class="tab-panel" role="tabpanel" data-tab="crew">
      <ul class="job-associates" style="list-style-type: none;">
          <li>
              <div class="selection-container">
@@ -315,17 +317,21 @@ function showJobDetails(current_job){
      </ul>  
     </div>
      
-     <input id="show_pdf" type="button" value="ΠΡΟΒΟΛΗ PDF"></input>
-     <input id="update_job" type="button" value="Αποθήκευση">
-     <input id="archive_job" type="button" value="Αρχειοθέτηση">
-     <input id="add_to_Calendar" type="button" value="Προσθήκη στο Ημερολόγιο" style="background-color:#213A5C">
-     <input id="show_payments" type="button" value="Προβολή Πληρωμών">
+     <div class="modal-actions">
+       <input id="show_pdf" type="button" value="ΠΡΟΒΟΛΗ PDF">
+       <input id="update_job" type="button" value="Αποθήκευση">
+       <input id="add_to_Calendar" type="button" value="Προσθήκη στο Ημερολόγιο" style="background-color:#213A5C">
+       <input id="show_payments" type="button" value="Προβολή Πληρωμών">
+       <input id="archive_job" class="danger-btn" type="button" value="Αρχειοθέτηση">
+     </div>
 
     </div>
   
   </div>`;
   fill_form(current_job);
   make_checklist_events();
+  update_task_count();
+  initTabs(modal);
   initDatePickers(modal);
   modal.style.display = "block";
 
@@ -395,12 +401,12 @@ function fill_form(current_job) {
     list_items[8].classList.add("checked");
   }
   if (current_job.task10) {
-    list_items[8].classList.add("selected");
-    list_items[8].classList.add("checked");
+    list_items[9].classList.add("selected");
+    list_items[9].classList.add("checked");
   }
   if (current_job.task11) {
-    list_items[8].classList.add("selected");
-    list_items[8].classList.add("checked");
+    list_items[10].classList.add("selected");
+    list_items[10].classList.add("checked");
   }
 
   // fill associates
@@ -422,22 +428,14 @@ function checkbox_status(checked){
   }
 }
 
-function make_checklist_events() {
-  //collapsible events
-  var coll = document.getElementsByClassName("collapsible");
-  var i;
+// done/total count shown on the ΕΡΓΑΣΙΕΣ tab
+function update_task_count() {
+  var items = document.querySelectorAll(".modal .to-do-list li");
+  var done = document.querySelectorAll(".modal .to-do-list li.checked").length;
+  document.querySelector(".modal .tab-count").textContent = `${done}/${items.length}`;
+}
 
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function () {
-      this.classList.toggle("active");
-      var content = this.nextElementSibling;
-      if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-      } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-      }
-    });
-  }
+function make_checklist_events() {
   // Add a "checked" symbol when clicking on a list item
   var list = document.querySelector(".modal ul");
   list.addEventListener(
@@ -445,6 +443,7 @@ function make_checklist_events() {
     function (ev) {
       if (ev.target.tagName === "LI") {
         ev.target.classList.toggle("checked");
+        update_task_count();
       }
     },
     false

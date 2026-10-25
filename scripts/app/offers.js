@@ -116,12 +116,12 @@ function showOfferDetails(current_offer){
        <textarea name="description" placeholder="Γράψε κάτι.." style="height:50px">${current_offer.description}</textarea>
       
        <input type="text" id="pdf_file_name" name="pdf_file_name" style="display: none;" value="${current_offer.pdf}">
-       <input id="show_pdf" type="button" value="ΠΡΟΒΟΛΗ PDF">
-       
-       <input id="update_offer" type="button" value="Αποθήκευση">
-       <input id="make_job" type="button" value="Εκλεισε">
-       
-       <input id="archive_offer" type="button" value="Αρχειοθέτηση">
+       <div class="modal-actions">
+         <input id="show_pdf" type="button" value="ΠΡΟΒΟΛΗ PDF">
+         <input id="update_offer" type="button" value="Αποθήκευση">
+         <input id="make_job" type="button" value="Εκλεισε">
+         <input id="archive_offer" class="danger-btn" type="button" value="Αρχειοθέτηση">
+       </div>
 
      </form>
    </div>`;

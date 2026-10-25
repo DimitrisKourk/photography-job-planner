@@ -7,10 +7,12 @@ document.querySelector(".settings img").addEventListener("click", function () {
 function open_settings() {
   let anHTML = `<div class="modal-content">
          <span class="close">&times;</span>
-<input id="associates-btn" type="button" value="Συνεργάτες">
-<input id="prices-btn" type="button" value="Τιμοκατάλογος">
-<input id="schedule-btn" type="button" value="Πρόγραμμα">
-<input id="general-btn" type="button" value="Γενικά">
+<div class="tab-bar" role="tablist">
+  <button type="button" class="tab-btn" role="tab" id="associates-btn">Συνεργάτες</button>
+  <button type="button" class="tab-btn" role="tab" id="prices-btn">Τιμοκατάλογος</button>
+  <button type="button" class="tab-btn" role="tab" id="schedule-btn">Πρόγραμμα</button>
+  <button type="button" class="tab-btn" role="tab" id="general-btn">Γενικά</button>
+</div>
 
 <div id="SettingsTabContent">
 
@@ -21,6 +23,8 @@ function open_settings() {
   
   modal.innerHTML = anHTML;
   modal.style.display = "block";
+  // the tabs here re-render #SettingsTabContent instead of switching panels
+  initTabs(modal);
   document.querySelector(".modal-content #associates-btn").addEventListener("click", function() {getAssociates("maketable");});
   document.querySelector(".modal-content #prices-btn").addEventListener("click", function (){getProducts("maketable");});
   document.querySelector(".modal-content #schedule-btn").addEventListener("click", function (){getJobSchedule();});
@@ -125,16 +129,7 @@ function make_associates_table(Associates){
     `;
   
   content.innerHTML=anHTML;
-
-  document.querySelector(".modal-content #SettingsTabContent .collapsible").addEventListener("click", function () {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.maxHeight) {
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
-    }
-  });
+  initCollapsibles(content);
 
   document.querySelector("#new_associate").addEventListener("click", function () {
     addAssociate()
@@ -225,16 +220,7 @@ function make_products_table(ProductTable){
     `;
   
   content.innerHTML=anHTML;
-
-  document.querySelector(".modal-content #SettingsTabContent .collapsible").addEventListener("click", function () {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.maxHeight) {
-      content.style.maxHeight = null;
-    } else {
-      content.style.maxHeight = content.scrollHeight + "px";
-    }
-  });
+  initCollapsibles(content);
 
   document.querySelector("#new_product").addEventListener("click", function () {
     addProduct()

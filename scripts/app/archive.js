@@ -354,8 +354,11 @@ function showArchivedJobDetails(current_job){
      <span class="close">&times;</span>
      <h3>Λεπτομέριες Εργασίας</h3>
 
-     <button class="collapsible">ΠΛΗΡΟΦΟΡΙΕΣ</button>
-     <div class="content">
+     <div class="tab-bar" role="tablist">
+       <button type="button" class="tab-btn" role="tab" data-tab="info">ΠΛΗΡΟΦΟΡΙΕΣ</button>
+       <button type="button" class="tab-btn" role="tab" data-tab="crew">ΣΥΝΕΡΓΑΤΕΣ</button>
+     </div>
+     <div class="tab-panel" role="tabpanel" data-tab="info">
         <form class="offer_form">
        
           <label for="type">Τύπος</label>
@@ -412,8 +415,7 @@ function showArchivedJobDetails(current_job){
           
         </form>
      </div>
-     <button class="collapsible">ΣΥΝΕΡΓΑΤΕΣ</button>
-     <div class="content">
+     <div class="tab-panel" role="tabpanel" data-tab="crew">
      <ul class="job-associates" style="list-style-type: none;">
          <li>
              <div class="selection-container">
@@ -524,6 +526,7 @@ function showArchivedJobDetails(current_job){
   if(current_job.video_editor){document.querySelector(" ul li [name='ΜΟΝΤΑΖ']").value=current_job.video_editor;  };
   if(current_job.drone){document.querySelector(" ul li [name='Drone']").value=current_job.drone;};
 
+  initTabs(modal);
   initDatePickers(modal);
   modal.style.display = "block";
   var span = document.getElementsByClassName("close")[0];
@@ -545,21 +548,5 @@ function showArchivedJobDetails(current_job){
     
     show_pdf("archived_job",current_job.id,current_job.pdf);
   });
-
-  //collapsible events
-  var coll = document.getElementsByClassName("collapsible");
-  var i;
-
-  for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function () {
-      this.classList.toggle("active");
-      var content = this.nextElementSibling;
-      if (content.style.maxHeight) {
-        content.style.maxHeight = null;
-      } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-      }
-    });
-  }
 }
 

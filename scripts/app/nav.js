@@ -1,4 +1,4 @@
-// logo/home links, list filter, slide-out menu
+// logo/home links, list filter, slide-out menu, tab and collapsible helpers
 
 
 document.querySelector(".logo").addEventListener("click",function(){
@@ -92,5 +92,35 @@ function filter(){
 
   init();
 })();
+
+// tabs: each .tab-btn shows the .tab-panel with the same data-tab and hides the rest.
+// panels are only hidden, never removed, because the form readers query the whole page
+function initTabs(container) {
+  var buttons = container.querySelectorAll(".tab-btn");
+  var panels = container.querySelectorAll(".tab-panel");
+  function select(btn) {
+    buttons.forEach(function (b) { b.setAttribute("aria-selected", b === btn); });
+    panels.forEach(function (p) { p.hidden = p.dataset.tab !== btn.dataset.tab; });
+  }
+  buttons.forEach(function (btn) {
+    btn.addEventListener("click", function () { select(btn); });
+  });
+  if (buttons.length) select(buttons[0]);
+}
+
+// collapsible: a .collapsible button opens/closes the element right after it
+function initCollapsibles(container) {
+  container.querySelectorAll(".collapsible").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.maxHeight) {
+        content.style.maxHeight = null;
+      } else {
+        content.style.maxHeight = content.scrollHeight + "px";
+      }
+    });
+  });
+}
 
 
