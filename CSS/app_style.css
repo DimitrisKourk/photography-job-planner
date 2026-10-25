@@ -131,10 +131,11 @@ nav {
     background-color: #f1f1f1;
   }
 
-  /* underline tabs (job/archive details, settings); the bar scrolls sideways on narrow screens */
+  /* underline tabs (job/archive details, settings); tabs wrap on narrow screens.
+     no overflow here: the buttons' -2px margin would make the bar scrollable */
   .tab-bar {
     display: flex;
-    overflow-x: auto;
+    flex-wrap: wrap;
     border-bottom: 2px solid #ddd;
     margin-bottom: 0;
   }
@@ -666,6 +667,54 @@ nav::before {
 
 .job .img:hover{
   transform: scale3d(1.1,1.1,1.1);
+}
+
+/* payment progress: overlays the bottom edge of the card, visible on hover only */
+.job {
+    position: relative;
+}
+
+.pay-progress-anchor {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.pay-progress {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 10px 6px;
+    background: rgba(235, 235, 235, 0.9);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.3s, transform 0.3s;
+    pointer-events: none;
+}
+
+.job-wrapper:hover .pay-progress {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.pay-progress-track {
+    flex: 1;
+    height: 6px;
+    border-radius: 3px;
+    overflow: hidden;
+    background: #ccc;
+}
+
+.pay-progress-fill {
+    height: 100%;
+    border-radius: 3px;
+}
+
+.pay-progress-label {
+    font-size: 11px;
+    white-space: nowrap;
+    color: #333;
 }
 
 .job .info {

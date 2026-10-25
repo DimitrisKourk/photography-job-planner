@@ -36,6 +36,7 @@ function make_job_cards(jobs) {
                              <button id="${job.id}">&#x2022;   &#x2022;   &#x2022;</button>
                          </div>
                      </div>
+                     <div class="pay-progress-anchor" data-job-id="${job.id}">${payment_progress_html(job.price, job.paid)}</div>
                  </div>
              </div>`;
   }
@@ -44,6 +45,31 @@ function make_job_cards(jobs) {
   details_job_modal();
 }
 //make_job_cards(Myjobs);
+
+// paid/price bar shown on card hover; its colour goes from red (0%) to green (100%)
+function payment_progress_html(price, paid) {
+  price = Number(price);
+  paid = Number(paid) || 0;
+  if (!price) return "";
+  let percent = Math.min(100, Math.max(0, Math.round((paid / price) * 100)));
+  return `<div class="pay-progress">
+            <div class="pay-progress-track">
+              <div class="pay-progress-fill" style="width:${percent}%; background:hsl(${percent * 1.2}, 70%, 45%)"></div>
+            </div>
+            <span class="pay-progress-label">${paid} / ${price} € · ${percent}%</span>
+          </div>`;
+}
+
+// keep the card bar in sync after a payment is added/deleted in the details modal
+function update_card_payment_progress(job_id, price, Payments) {
+  let anchor = document.querySelector(`.pay-progress-anchor[data-job-id="${job_id}"]`);
+  if (!anchor) return;
+  let paid = 0;
+  for (let payment of Payments) {
+    paid += payment.amount;
+  }
+  anchor.innerHTML = payment_progress_html(price, paid);
+}
 
 function check_id() {
   buttons = document.querySelectorAll(".job .details-btn");

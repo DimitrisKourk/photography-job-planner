@@ -38,11 +38,11 @@ router.get("/jobs/filtered/:dates", handle(async (req, res) => {
   var text;
   if(month==='0'){
     values=[year];
-    text = `SELECT id,job_name,job_type,date FROM Jobs WHERE year(date)=? ORDER BY date`;
+    text = `SELECT id,job_name,job_type,date,price,(SELECT COALESCE(SUM(amount),0) FROM CustomerPayments WHERE job_id=Jobs.id) AS paid FROM Jobs WHERE year(date)=? ORDER BY date`;
     }
   else{
     values=[year,month];
-    text = `SELECT id,job_name,job_type,date FROM Jobs WHERE year(date)=? AND month(date)=? ORDER BY date`;
+    text = `SELECT id,job_name,job_type,date,price,(SELECT COALESCE(SUM(amount),0) FROM CustomerPayments WHERE job_id=Jobs.id) AS paid FROM Jobs WHERE year(date)=? AND month(date)=? ORDER BY date`;
     }
   res.json(await query(text, values));
 }));

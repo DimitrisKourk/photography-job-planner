@@ -25,7 +25,8 @@ function getPayments(id,condition,offer_price){
         show_payments_archived(json,offer_price);
       }
       else{
-        show_payments(json,id,offer_price);}
+        show_payments(json,id,offer_price);
+        update_card_payment_progress(id,offer_price,json);}
       return json;
       }) 
     .then((json)=>{if(condition!="archive" && document.querySelector("#payments_owed_amount")){calculate_owed(offer_price,json);}})
