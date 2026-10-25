@@ -41,9 +41,9 @@ document.querySelector("#dashboard").addEventListener("click",function(){
                   <div class="table-container">
                     <table class="overview-table">
                        <tr> <th>ΤΥΠΟΣ</th> <th>ΠΟΣΟ</th></tr>
-                       <tr> <td>ΕΣΟΔΑ</td> <td>${myDashboard.Baptism_payments+myDashboard.Wedding_payments+myDashboard.Photo_payments}</td></tr>
-                       <tr> <td>ΕΚΚΡΕΜΟΤΗΤΕΣ</td><td>${myDashboard.Baptism_unpaid+myDashboard.Wedding_unpaid+myDashboard.Photo_unpaid}</td></tr>
-                       <tr> <td>ΕΞΟΔΑ</td> <td>${myDashboard.Baptism_expenses+myDashboard.Wedding_expenses+myDashboard.Photo_expenses}</td></tr>                    
+                       <tr> <td>ΕΣΟΔΑ</td> <td>${myDashboard.Baptism_payments+myDashboard.Wedding_payments+myDashboard.Gamobaptisi_payments+myDashboard.Photo_payments}</td></tr>
+                       <tr> <td>ΕΚΚΡΕΜΟΤΗΤΕΣ</td><td>${myDashboard.Baptism_unpaid+myDashboard.Wedding_unpaid+myDashboard.Gamobaptisi_unpaid+myDashboard.Photo_unpaid}</td></tr>
+                       <tr> <td>ΕΞΟΔΑ</td> <td>${myDashboard.Baptism_expenses+myDashboard.Wedding_expenses+myDashboard.Gamobaptisi_expenses+myDashboard.Photo_expenses}</td></tr>                    
                     </table>
                   </div>
                   <div class="graph-container"><canvas id="overview-chart"></canvas></div>
@@ -55,6 +55,7 @@ document.querySelector("#dashboard").addEventListener("click",function(){
                        <tr> <th>ΤΥΠΟΣ</th><th>ΑΡΙΘΜΟΣ</th></tr>
                        <tr> <td>Γάμοι</td><td>${myDashboard.Wedding_number}</td></tr>
                        <tr> <td>Βαπτίσεις</td><td>${myDashboard.Baptism_number}</td></tr>
+                       <tr> <td>Γαμοβαπτίσεις</td><td>${myDashboard.Gamobaptisi_number}</td></tr>
                        <tr> <td>Άλλο</td><td>${myDashboard.Photo_number}</td></tr>                    
                     </table>
                   </div>
@@ -67,6 +68,7 @@ document.querySelector("#dashboard").addEventListener("click",function(){
                        <tr> <th>ΤΥΠΟΣ</th><th>ΠΟΣΟ</th></tr>
                        <tr> <td>Γάμοι</td><td>${myDashboard.Wedding_total_income}</td></tr>
                        <tr> <td>Βαπτίσεις</td><td>${myDashboard.Baptism_total_income}</td></tr>
+                       <tr> <td>Γαμοβαπτίσεις</td><td>${myDashboard.Gamobaptisi_total_income}</td></tr>
                        <tr> <td>Άλλο</td><td>${myDashboard.Photo_total_income}</td></tr>                    
                     </table>
                   </div>
@@ -79,6 +81,7 @@ document.querySelector("#dashboard").addEventListener("click",function(){
                        <tr> <th>ΤΥΠΟΣ</th><th>ΠΟΣΟ</th></tr>
                        <tr> <td>Γάμοι</td><td>${myDashboard.Wedding_expenses}</td></tr>
                        <tr> <td>Βαπτίσεις</td><td>${myDashboard.Baptism_expenses}</td></tr>
+                       <tr> <td>Γαμοβαπτίσεις</td><td>${myDashboard.Gamobaptisi_expenses}</td></tr>
                        <tr> <td>Άλλο</td><td>${myDashboard.Photo_expenses}</td></tr>                   
                     </table>
                   </div>
@@ -109,9 +112,11 @@ document.querySelector("#dashboard").addEventListener("click",function(){
                        <tr> <td></td> <td></td><td></td><td></td><td></td></tr>
                        <tr> <th>Βαπτίσεις</th> <td>${myDashboard.Baptism_number}</td><td>${myDashboard.Baptism_payments}</td><td>${myDashboard.Baptism_unpaid}</td><td>${myDashboard.Baptism_expenses}</td></tr>
                        <tr> <td></td> <td></td><td></td><td></td><td></td></tr>
+                       <tr> <th>Γαμοβαπτίσεις</th> <td>${myDashboard.Gamobaptisi_number}</td><td>${myDashboard.Gamobaptisi_payments}</td><td>${myDashboard.Gamobaptisi_unpaid}</td><td>${myDashboard.Gamobaptisi_expenses}</td></tr>
+                       <tr> <td></td> <td></td><td></td><td></td><td></td></tr>
                        <tr> <th>Άλλο</th> <td>${myDashboard.Photo_number}</td><td>${myDashboard.Photo_payments}</td><td>${myDashboard.Photo_unpaid}</td><td>${myDashboard.Photo_expenses}</td></tr>
                        <tr> <td></td> <td></td><td></td><td></td><td></td></tr> 
-                       <tr> <th>Σύνολο</th> <td>${myDashboard.Wedding_number+myDashboard.Baptism_number+myDashboard.Photo_number}</td><td>${myDashboard.Wedding_payments+myDashboard.Baptism_payments+myDashboard.Photo_payments}</td><td>${myDashboard.Wedding_unpaid+myDashboard.Baptism_unpaid+myDashboard.Photo_unpaid}</td><td>${myDashboard.Wedding_expenses+myDashboard.Baptism_expenses+myDashboard.Photo_expenses}</td></tr>
+                       <tr> <th>Σύνολο</th> <td>${myDashboard.Wedding_number+myDashboard.Baptism_number+myDashboard.Gamobaptisi_number+myDashboard.Photo_number}</td><td>${myDashboard.Wedding_payments+myDashboard.Baptism_payments+myDashboard.Gamobaptisi_payments+myDashboard.Photo_payments}</td><td>${myDashboard.Wedding_unpaid+myDashboard.Baptism_unpaid+myDashboard.Gamobaptisi_unpaid+myDashboard.Photo_unpaid}</td><td>${myDashboard.Wedding_expenses+myDashboard.Baptism_expenses+myDashboard.Gamobaptisi_expenses+myDashboard.Photo_expenses}</td></tr>
                        <tr> <td></td> <td></td><td></td><td></td><td></td></tr>                
                     </table>
                   </div>
@@ -195,13 +200,13 @@ document.querySelector("#dashboard").addEventListener("click",function(){
       `;
       getDashboardData(year);
     });
-    make_overview_chart([myDashboard.Baptism_payments+myDashboard.Wedding_payments+myDashboard.Photo_payments,
-      myDashboard.Baptism_unpaid+myDashboard.Wedding_unpaid+myDashboard.Photo_unpaid,
-      myDashboard.Baptism_expenses+myDashboard.Wedding_expenses+myDashboard.Photo_expenses,
+    make_overview_chart([myDashboard.Baptism_payments+myDashboard.Wedding_payments+myDashboard.Gamobaptisi_payments+myDashboard.Photo_payments,
+      myDashboard.Baptism_unpaid+myDashboard.Wedding_unpaid+myDashboard.Gamobaptisi_unpaid+myDashboard.Photo_unpaid,
+      myDashboard.Baptism_expenses+myDashboard.Wedding_expenses+myDashboard.Gamobaptisi_expenses+myDashboard.Photo_expenses,
     ]);
-    make_jobs_per_category_chart([myDashboard.Wedding_number,myDashboard.Baptism_number,myDashboard.Photo_number]);
-    make_income_per_category_chart([myDashboard.Wedding_total_income,myDashboard.Baptism_total_income,myDashboard.Photo_total_income]);
-    make_expenses_per_category_chart([myDashboard.Wedding_expenses,myDashboard.Baptism_expenses,myDashboard.Photo_expenses]);
+    make_jobs_per_category_chart([myDashboard.Wedding_number,myDashboard.Baptism_number,myDashboard.Gamobaptisi_number,myDashboard.Photo_number]);
+    make_income_per_category_chart([myDashboard.Wedding_total_income,myDashboard.Baptism_total_income,myDashboard.Gamobaptisi_total_income,myDashboard.Photo_total_income]);
+    make_expenses_per_category_chart([myDashboard.Wedding_expenses,myDashboard.Baptism_expenses,myDashboard.Gamobaptisi_expenses,myDashboard.Photo_expenses]);
     make_expenses_per_type_chart([myDashboard.Employ_payments_expenses,myDashboard.Editor_payments_expenses,myDashboard.Printer_payments_expenses])
     make_montly_income_expenses_chart(myDashboard.monthlyIncome,myDashboard.monthlyExpenses);
 
@@ -381,6 +386,11 @@ function getDashboardData(filter_year){
     fetch("/api/dashboard/monthlyExpenses/"+"10,"+year, { method: "GET" }),
     fetch("/api/dashboard/monthlyExpenses/"+"11,"+year, { method: "GET" }),
     fetch("/api/dashboard/monthlyExpenses/"+"12,"+year, { method: "GET" }),
+
+    fetch("/api/dashboard/jobCount/"+"gamobaptisi,"+year, { method: "GET" }),
+    fetch("/api/dashboard/IncomePerCategory/"+"gamobaptisi,"+year, { method: "GET" }),
+    fetch("/api/dashboard/PaymentsPerCategory/"+"gamobaptisi,"+year, { method: "GET" }),
+    fetch("/api/dashboard/ExpensesPerCategory/"+"gamobaptisi,"+year, { method: "GET" }),
 ])
 .then(response => Promise.all(response.map(r => r.json())))
 .then(response => {
@@ -432,6 +442,12 @@ function getDashboardData(filter_year){
   myDashboard.monthlyExpenses[9]=response[36][0].MonthlyExpenses;
   myDashboard.monthlyExpenses[10]=response[37][0].MonthlyExpenses;
   myDashboard.monthlyExpenses[11]=response[38][0].MonthlyExpenses;
+
+  myDashboard.Gamobaptisi_number=response[39][0].job_count;
+  myDashboard.Gamobaptisi_total_income=response[40][0].incomeTotal;
+  myDashboard.Gamobaptisi_payments=response[41][0].paymentTotal;
+  myDashboard.Gamobaptisi_unpaid=myDashboard.Gamobaptisi_total_income-myDashboard.Gamobaptisi_payments;
+  myDashboard.Gamobaptisi_expenses=response[42][0].Expenses;
 
 
   console.log(myDashboard);

@@ -26,10 +26,11 @@ function make_overview_chart(mydata){
     new Chart(chartid, {
       type: 'bar',
       data: {
-        labels: ['ΓΑΜΟΣ', 'ΒΑΠΤΙΣΗ', 'ΑΛΛΟ'],
+        labels: ['ΓΑΜΟΣ', 'ΒΑΠΤΙΣΗ', 'ΓΑΜΟΒΑΠΤΙΣΗ', 'ΑΛΛΟ'],
         datasets: [{
           data: mydata,
           backgroundColor: [
+            'rgb(54, 162, 235)',
             'rgb(54, 162, 235)',
             'rgb(54, 162, 235)',
             'rgb(54, 162, 235)',
@@ -71,10 +72,11 @@ function make_overview_chart(mydata){
       new Chart(chartid, {
         type: 'bar',
         data: {
-          labels: ['ΓΑΜΟΣ', 'ΒΑΠΤΙΣΗ', 'ΑΛΛΟ'],
+          labels: ['ΓΑΜΟΣ', 'ΒΑΠΤΙΣΗ', 'ΓΑΜΟΒΑΠΤΙΣΗ', 'ΑΛΛΟ'],
           datasets: [{
             data: mydata,
             backgroundColor: [
+              'rgb(255, 99, 132)',
               'rgb(255, 99, 132)',
               'rgb(255, 99, 132)',
               'rgb(255, 99, 132)'
@@ -116,10 +118,11 @@ function make_overview_chart(mydata){
         new Chart(chartid, {
           type: 'bar',
           data: {
-            labels: ['ΓΑΜΟΣ', 'ΒΑΠΤΙΣΗ', 'ΑΛΛΟ'],
+            labels: ['ΓΑΜΟΣ', 'ΒΑΠΤΙΣΗ', 'ΓΑΜΟΒΑΠΤΙΣΗ', 'ΑΛΛΟ'],
             datasets: [{
               data: mydata,
               backgroundColor: [
+                'rgb(123, 255, 86)',
                 'rgb(123, 255, 86)',
                 'rgb(123, 255, 86)',
                 'rgb(123, 255, 86)',

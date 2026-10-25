@@ -59,11 +59,14 @@ function showOfferDetails(current_offer){
   //Show correct option in select menu
   let selectgamos = " ";
   let selectbaptisi = " ";
+  let selectgamobaptisi = " ";
   let selectfoto = " ";
   if (current_offer.offer_type == "gamos") {
     selectgamos = `selected="selected"`;
   } else if (current_offer.offer_type == "baptisi") {
     selectbaptisi = `selected="selected"`;
+  } else if (current_offer.offer_type == "gamobaptisi") {
+    selectgamobaptisi = `selected="selected"`;
   } else {
     selectfoto = `selected="selected"`;
   }
@@ -77,6 +80,7 @@ function showOfferDetails(current_offer){
        <select name="type">
          <option value="gamos" ${selectgamos}>Γάμος</option>
          <option value="baptisi" ${selectbaptisi}>Βάπτιση</option>
+         <option value="gamobaptisi" ${selectgamobaptisi}>Γαμοβάπτιση</option>
          <option value="fotografisi" ${selectfoto}>Φωτογράφιση</option>
        </select>
    
@@ -170,6 +174,7 @@ function create_offer() {
            <select id="type" name="type">
              <option value="gamos" >Γάμος</option>
              <option value="baptisi">Βάπτιση</option>
+             <option value="gamobaptisi">Γαμοβάπτιση</option>
              <option value="fotografisi" selected="selected">Φωτογράφιση</option>
            </select>
  
@@ -243,6 +248,10 @@ function show_offer_print_preview(offer_data){
   if(offer_data.offer_type=="gamos"){
     background_image="/images/offer_PDF_gamos.png";
     title="ΓΑΜΟΥ";
+  }
+  else if(offer_data.offer_type=="gamobaptisi"){
+    background_image="/images/offer_PDF_gamos.png";
+    title="ΓΑΜΟΒΑΠΤΙΣΗΣ";
   }
   else{
     background_image="/images/offer_PDF_baptisi.png";

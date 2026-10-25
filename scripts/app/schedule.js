@@ -157,6 +157,9 @@ function make_schedule(Jobs,Offers){
     else if(job.job_type==="baptisi"){
       schedule_table[day].push("ΒΑΠΤΙΣΗ-"+ job.job_name); 
     }
+    else if(job.job_type==="gamobaptisi"){
+      schedule_table[day].push("ΓΑΜΟΒΑΠΤΙΣΗ-"+ job.job_name); 
+    }
     else {
       schedule_table[day].push("ΦΩΤΟΓΡΑΦΙΣΗ-"+ job.job_name); 
     }

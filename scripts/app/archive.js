@@ -137,11 +137,14 @@ function showArchivedOfferDetails(current_offer){
   //Show correct option in select menu
   let selectgamos = " ";
   let selectbaptisi = " ";
+  let selectgamobaptisi = " ";
   let selectfoto = " ";
   if (current_offer.offer_type == "gamos") {
     selectgamos = `selected="selected"`;
   } else if (current_offer.offer_type == "baptisi") {
     selectbaptisi = `selected="selected"`;
+  } else if (current_offer.offer_type == "gamobaptisi") {
+    selectgamobaptisi = `selected="selected"`;
   } else {
     selectfoto = `selected="selected"`;
   }
@@ -155,6 +158,7 @@ function showArchivedOfferDetails(current_offer){
        <select name="type">
          <option value="gamos" ${selectgamos}>Γάμος</option>
          <option value="baptisi" ${selectbaptisi}>Βάπτιση</option>
+         <option value="gamobaptisi" ${selectgamobaptisi}>Γαμοβάπτιση</option>
          <option value="fotografisi" ${selectfoto}>Φωτογράφιση</option>
        </select>
    
@@ -321,11 +325,14 @@ function showArchivedJobDetails(current_job){
   //Show correct option in select menu
   let selectgamos = " ";
   let selectbaptisi = " ";
+  let selectgamobaptisi = " ";
   let selectfoto = " ";
   if (current_job.job_type == "gamos") {
     selectgamos = `selected="selected"`;} 
   else if (current_job.job_type == "baptisi") {
     selectbaptisi = `selected="selected"`;} 
+  else if (current_job.job_type == "gamobaptisi") {
+    selectgamobaptisi = `selected="selected"`;} 
   else {
     selectfoto = `selected="selected"`;}
 
@@ -355,6 +362,7 @@ function showArchivedJobDetails(current_job){
           <select name="type">
             <option value="gamos" ${selectgamos}>Γάμος</option>
             <option value="baptisi" ${selectbaptisi}>Βάπτιση</option>
+            <option value="gamobaptisi" ${selectgamobaptisi}>Γαμοβάπτιση</option>
             <option value="fotografisi" ${selectfoto}>Φωτογράφιση</option>
           </select>
       

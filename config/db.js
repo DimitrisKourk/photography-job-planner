@@ -10,6 +10,8 @@ const baseConfig = {
   password: process.env.db_password,
   port: Number(process.env.db_port) || 3306,
   timezone: "Z",
+  // SUM() returns DECIMAL, which mysql2 sends as a string by default; the dashboard adds these up
+  decimalNumbers: true,
 };
 
 // optional SSL, needed for hosted databases such as Aiven: db_ssl_ca points to the CA certificate

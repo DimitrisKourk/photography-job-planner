@@ -12,6 +12,8 @@ function make_job_cards(jobs) {
       image = "images/gamos.png";
     } else if (job.job_type == "baptisi") {
       image = "images/baptisi.png";
+    } else if (job.job_type == "gamobaptisi") {
+      image = "images/gamobaptisi.png";
     } else {
       image = "images/ergasia.png";
     }
@@ -106,11 +108,14 @@ function showJobDetails(current_job){
   //Show correct option in select menu
   let selectgamos = " ";
   let selectbaptisi = " ";
+  let selectgamobaptisi = " ";
   let selectfoto = " ";
   if (current_job.job_type == "gamos") {
     selectgamos = `selected="selected"`;} 
   else if (current_job.job_type == "baptisi") {
     selectbaptisi = `selected="selected"`;} 
+  else if (current_job.job_type == "gamobaptisi") {
+    selectgamobaptisi = `selected="selected"`;} 
   else {
     selectfoto = `selected="selected"`;}
 
@@ -140,6 +145,7 @@ function showJobDetails(current_job){
           <select name="type">
             <option value="gamos" ${selectgamos}>Γάμος</option>
             <option value="baptisi" ${selectbaptisi}>Βάπτιση</option>
+            <option value="gamobaptisi" ${selectgamobaptisi}>Γαμοβάπτιση</option>
             <option value="fotografisi" ${selectfoto}>Φωτογράφιση</option>
           </select>
       
@@ -503,6 +509,9 @@ function make_job_status_table(jobs){
     }
     else if(job.job_type==="baptisi"){
       type="ΒΑΠΤΙΣΗ";
+    }
+    else if(job.job_type==="gamobaptisi"){
+      type="ΓΑΜΟΒΑΠΤΙΣΗ";
     }
     anHTML += `<tr>
        <td>${type}</td>
